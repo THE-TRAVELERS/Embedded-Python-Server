@@ -1,0 +1,10 @@
+# VsCode
+.vscode
+
+# Python
+__pycache__
+venv
+travenv
+
+# Program
+logs
