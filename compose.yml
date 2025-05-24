@@ -6,9 +6,15 @@ services:
     container_name: travelers_api
     restart: unless-stopped
     command: ['fastapi', 'run', '/app/main.py', '--port', '8000']
+    privileged: true  # Give full access to all devices
+    network_mode: "host"  # Share host network stack (important for WiFi/Bluetooth)
     environment:
       - LD_LIBRARY_PATH=/opt/vc/lib
+      - PYTHONUNBUFFERED=1  # Helps with logging
     ports:
       - '8765:8000'
     volumes:
       - ./src/app:/app
+      - /dev:/dev  # Access to all devices
+      - /sys:/sys  # Required for GPIO
+      - /var/run/dbus:/var/run/dbus  # For DBus (Bluetooth requires this)
